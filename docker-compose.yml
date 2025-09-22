@@ -3,10 +3,14 @@ version: '3.8'
 services:
   frontend:
     build: ./frontend
-    container_name: educhat-frontend
+    container_name: galdencio-platform
     restart: unless-stopped
     ports:
       - "3000:80"
+    labels:
+      - "coolify.managed=true"
+      - "coolify.name=galdencio-platform"
+      - "coolify.fqdn=platform.swnew.com.br"
     depends_on:
       - api
     networks:
@@ -14,21 +18,16 @@ services:
 
   api:
     build: ./api
-    container_name: educhat-api
+    container_name: galdencio-platform-api
     restart: unless-stopped
     ports:
       - "3001:3001"
-    environment:
-      - NODE_ENV=production
-      - PORT=3001
+    labels:
+      - "coolify.managed=true"
+      - "coolify.name=galdencio-platform-api"  
+      - "coolify.fqdn=api.swnew.com.br"
     networks:
       - educhat-network
-    healthcheck:
-      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3001/health', (res) => process.exit(res.statusCode === 200 ? 0 : 1))"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
 
 networks:
   educhat-network:
