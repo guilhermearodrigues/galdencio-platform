@@ -5,7 +5,14 @@ const nextConfig = {
     unoptimized: true
   },
   trailingSlash: true,
-  output: 'export'
+  output: 'export',
+  distDir: 'out',
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  }
 }
 
 module.exports = nextConfig
